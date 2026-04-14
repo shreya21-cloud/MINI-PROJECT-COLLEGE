@@ -1,10 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Users, CalendarCheck, Settings, LogOut } from 'lucide-react';
+import { LayoutDashboard, Users, CalendarCheck, Settings, LogOut, Search } from 'lucide-react';
 
 const Layout = ({ children }) => {
   return (
-    <div className="layout-container">
+    <div className="layout-container animate-fade-in">
       <aside className="sidebar glass-card">
         <div className="logo-container">
           <div className="logo-icon">A</div>
@@ -41,18 +41,19 @@ const Layout = ({ children }) => {
       <main className="main-content">
         <header className="top-bar">
           <div className="search-bar">
-            {/* Search placeholder */}
+            {/* Keeping it simple but styled for future implementation */}
+            <input type="text" placeholder="Search anything..." />
           </div>
           <div className="user-profile">
             <div className="user-avatar">AD</div>
-            <span>Admin</span>
+            <span style={{ fontWeight: 500 }}>Admin</span>
           </div>
         </header>
+
         <section className="content-area">
           {children}
         </section>
       </main>
-
     </div>
   );
 };
