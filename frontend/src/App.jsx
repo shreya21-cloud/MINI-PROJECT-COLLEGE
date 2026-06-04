@@ -5,11 +5,14 @@ import Dashboard from './pages/Dashboard';
 import Students from './pages/Students';
 import Attendance from './pages/Attendance';
 import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return localStorage.getItem('isAuthenticated') === 'true';
   });
+  
+  const [authView, setAuthView] = useState('login'); // 'login' or 'signup'
 
   const handleLogin = () => {
     setIsAuthenticated(true);
@@ -19,10 +22,14 @@ function App() {
   const handleLogout = () => {
     setIsAuthenticated(false);
     localStorage.removeItem('isAuthenticated');
+    setAuthView('login');
   };
 
   if (!isAuthenticated) {
-    return <Login onLogin={handleLogin} />;
+    if (authView === 'signup') {
+      return <Signup onNavigateToLogin={() => setAuthView('login')} />;
+    }
+    return <Login onLogin={handleLogin} onNavigateToSignup={() => setAuthView('signup')} />;
   }
 
   return (
@@ -39,4 +46,5 @@ function App() {
 }
 
 export default App;
+
 

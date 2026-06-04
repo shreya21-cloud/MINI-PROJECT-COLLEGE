@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { LogIn, AlertCircle } from 'lucide-react';
 
-const Login = ({ onLogin }) => {
+const Login = ({ onLogin, onNavigateToSignup }) => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -20,7 +20,16 @@ const Login = ({ onLogin }) => {
 
     // Simulate network delay for premium feel
     setTimeout(() => {
-      if (username.toLowerCase() === 'admin' && password === 'admin') {
+      const isDefaultAdmin = username.toLowerCase() === 'admin' && password === 'admin';
+
+      // Check against registered users in localStorage
+      const existingUsersStr = localStorage.getItem('registeredUsers');
+      const registeredUsers = existingUsersStr ? JSON.parse(existingUsersStr) : [];
+      const isValidCustomUser = registeredUsers.some(
+        (u) => u.username.toLowerCase() === username.trim().toLowerCase() && u.password === password
+      );
+
+      if (isDefaultAdmin || isValidCustomUser) {
         onLogin();
       } else {
         setError('Invalid username or password');
@@ -91,7 +100,16 @@ const Login = ({ onLogin }) => {
         </form>
 
         <div className="login-footer-note">
-          <p>Use credentials <strong>admin / admin</strong> to sign in.</p>
+          <p style={{ marginBottom: '12px' }}>Use credentials <strong>admin / admin</strong> or register a new account.</p>
+          <p>
+            Don't have an account?{' '}
+            <span
+              onClick={onNavigateToSignup}
+              style={{ color: '#c4b5fd', cursor: 'pointer', textDecoration: 'underline', fontWeight: 500 }}
+            >
+              Sign Up
+            </span>
+          </p>
         </div>
       </div>
     </div>
@@ -99,3 +117,4 @@ const Login = ({ onLogin }) => {
 };
 
 export default Login;
+
