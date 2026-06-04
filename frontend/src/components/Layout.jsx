@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { LayoutDashboard, Users, CalendarCheck, Settings, LogOut, Search } from 'lucide-react';
 
-const Layout = ({ children }) => {
+const Layout = ({ children, onLogout }) => {
   return (
     <div className="layout-container animate-fade-in">
       <aside className="sidebar glass-card">
@@ -31,7 +31,7 @@ const Layout = ({ children }) => {
             <Settings size={20} />
             <span>Settings</span>
           </div>
-          <div className="nav-item logout">
+          <div className="nav-item logout" onClick={onLogout}>
             <LogOut size={20} />
             <span>Logout</span>
           </div>
